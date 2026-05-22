@@ -4,164 +4,90 @@ namespace LibraryManagementSystem.Forms
 {
     public class MainForm : Form
     {
-        private Panel  sidebar   = null!;
-        private Panel  content   = null!;
-        private Label  lblWelcome = null!;
+        readonly Panel content = new() { Dock = DockStyle.Fill, BackColor = UI.Light, Padding = new(10) };
 
         public MainForm()
         {
-            InitializeComponent();
-        }
+            Text = "City Public Library – Management System";
+            Size = new(1100, 680); StartPosition = FormStartPosition.CenterScreen;
+            MinimumSize = new(900, 580);
 
-        private void InitializeComponent()
-        {
-            Text            = "Library Management System";
-            Size            = new Size(1180, 700);
-            StartPosition   = FormStartPosition.CenterScreen;
-            MinimumSize     = new Size(900, 600);
-            BackColor       = Color.FromArgb(245, 248, 252);
+            // ── Top bar ───────────────────────────────────────────────────────
+            var top = new Panel { Dock = DockStyle.Top, Height = 50, BackColor = UI.Navy };
+            top.Controls.Add(new Label
+            {
+                Text = "📚  City Public Library", Dock = DockStyle.Left, Width = 380,
+                Font = new Font("Segoe UI", 13, FontStyle.Bold), ForeColor = Color.White,
+                TextAlign = ContentAlignment.MiddleLeft, Padding = new(14, 0, 0, 0)
+            });
+            top.Controls.Add(new Label
+            {
+                Text = $"{Session.FullName}  |  {Session.Role}",
+                Dock = DockStyle.Right, Width = 260, Font = UI.Body,
+                ForeColor = Color.FromArgb(170, 205, 235),
+                TextAlign = ContentAlignment.MiddleRight, Padding = new(0, 0, 12, 0)
+            });
+            var logout = UI.Btn("Logout", 0, 0, 80, UI.Red);
+            logout.Dock = DockStyle.Right; logout.Click += (_, _) => Close();
+            top.Controls.Add(logout);
 
-            // ── Top bar ─────────────────────────────────────────────────────
-            var topBar = new Panel
-            {
-                Dock      = DockStyle.Top,
-                Height    = 52,
-                BackColor = Color.FromArgb(26, 60, 94)
-            };
-            var lblApp = new Label
-            {
-                Text      = "📚  City Public Library – Management System",
-                ForeColor = Color.White,
-                Font      = new Font("Segoe UI", 13, FontStyle.Bold),
-                Dock      = DockStyle.Left,
-                Width     = 500,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding   = new Padding(12, 0, 0, 0)
-            };
-            lblWelcome = new Label
-            {
-                Text      = $"👤  {SessionHelper.FullName}  ({SessionHelper.Role})",
-                ForeColor = Color.FromArgb(180, 210, 240),
-                Font      = new Font("Segoe UI", 9),
-                Dock      = DockStyle.Right,
-                Width     = 280,
-                TextAlign = ContentAlignment.MiddleRight,
-                Padding   = new Padding(0, 0, 12, 0)
-            };
-            var btnLogout = new Button
-            {
-                Text      = "Logout",
-                Dock      = DockStyle.Right,
-                Width     = 80,
-                FlatStyle = FlatStyle.Flat,
-                ForeColor = Color.White,
-                BackColor = Color.FromArgb(180, 0, 0),
-                Font      = new Font("Segoe UI", 9),
-                Cursor    = Cursors.Hand
-            };
-            btnLogout.FlatAppearance.BorderSize = 0;
-            btnLogout.Click += (_, _) => { SessionHelper.Clear(); Close(); };
-            topBar.Controls.AddRange(new Control[] { lblApp, lblWelcome, btnLogout });
+            // ── Sidebar ───────────────────────────────────────────────────────
+            var side = new Panel { Dock = DockStyle.Left, Width = 182, BackColor = UI.Teal };
 
-            // ── Sidebar ─────────────────────────────────────────────────────
-            sidebar = new Panel
+            (string Text, Func<Form>? Make)[] nav =
             {
-                Dock      = DockStyle.Left,
-                Width     = 190,
-                BackColor = Color.FromArgb(36, 75, 115),
-                Padding   = new Padding(0, 10, 0, 0)
+                ("➕  Borrow a Book",    () => new BorrowForm()),
+                ("↩️  Return a Book",    () => new ReturnForm()),
+                ("📋  Manage Books",     () => new BooksForm()),
+                ("👥  Manage Users",     () => new UsersForm()),
+                ("",                     null),
+                ("📊  Borrowings",       () => new ReportForm("borrowings")),
+                ("📦  Inventory",        () => new ReportForm("inventory")),
+                ("👤  User Activity",    () => new ReportForm("useractivity")),
             };
 
-            // ── Content area ────────────────────────────────────────────────
-            content = new Panel
+            foreach (var (text, make) in nav)
             {
-                Dock      = DockStyle.Fill,
-                BackColor = Color.FromArgb(245, 248, 252),
-                Padding   = new Padding(12)
-            };
-
-            // Navigation buttons
-            (string Label, Action Action)[] navItems =
-            {
-                ("🏠  Dashboard",         ShowDashboard),
-                ("➕  Borrow a Book",     () => LoadChild(new BorrowBookForm())),
-                ("↩️  Return a Book",     () => LoadChild(new ReturnBookForm())),
-                ("📋  Manage Books",      () => LoadChild(new ManageBooksForm())),
-                ("👥  Manage Users",      () => LoadChild(new ManageUsersForm())),
-                ("─────────────────────", null!),
-                ("📊  Borrowings Report", () => LoadChild(new ReportForm("borrowings"))),
-                ("📦  Inventory Report",  () => LoadChild(new ReportForm("inventory"))),
-                ("👤  User Activity",     () => LoadChild(new ReportForm("useractivity")))
-            };
-
-            foreach (var (label, action) in navItems)
-            {
-                if (action == null)
+                if (make == null)
                 {
-                    sidebar.Controls.Add(new Label
+                    side.Controls.Add(new Label
                     {
-                        Text      = "──────────────────",
-                        ForeColor = Color.FromArgb(100, 140, 180),
-                        Font      = new Font("Segoe UI", 8),
-                        Dock      = DockStyle.Top,
-                        Height    = 20,
+                        Text = "── REPORTS ──", Dock = DockStyle.Top, Height = 26,
+                        Font = UI.Small, ForeColor = Color.FromArgb(120, 160, 200),
                         TextAlign = ContentAlignment.MiddleCenter
                     });
                     continue;
                 }
-                var captured = action;
+                var m   = make;
                 var btn = new Button
                 {
-                    Text      = label,
-                    Dock      = DockStyle.Top,
-                    Height    = 42,
-                    FlatStyle = FlatStyle.Flat,
-                    ForeColor = Color.White,
-                    BackColor = Color.FromArgb(36, 75, 115),
-                    Font      = new Font("Segoe UI", 9.5f),
+                    Text = text, Dock = DockStyle.Top, Height = 44,
+                    FlatStyle = FlatStyle.Flat, ForeColor = Color.White,
+                    BackColor = UI.Teal, Font = new Font("Segoe UI", 9.5f),
                     TextAlign = ContentAlignment.MiddleLeft,
-                    Padding   = new Padding(10, 0, 0, 0),
-                    Cursor    = Cursors.Hand
+                    Padding = new(12, 0, 0, 0), Cursor = Cursors.Hand
                 };
-                btn.FlatAppearance.BorderSize   = 0;
-                btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(50, 100, 155);
-                btn.Click += (_, _) => captured();
-                sidebar.Controls.Add(btn);
+                btn.FlatAppearance.BorderSize = 0;
+                btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(55, 105, 160);
+                btn.Click += (_, _) => Show(m());
+                side.Controls.Add(btn);
             }
 
-            // Reverse dock order so buttons appear top-to-bottom
-            var btns = sidebar.Controls.Cast<Control>().ToList();
-            sidebar.Controls.Clear();
-            btns.Reverse();
-            foreach (var c in btns) sidebar.Controls.Add(c);
+            // Reverse so Dock=Top stacks correctly
+            var items = side.Controls.Cast<Control>().ToList();
+            side.Controls.Clear(); items.Reverse();
+            foreach (var c in items) side.Controls.Add(c);
 
-            Controls.AddRange(new Control[] { content, sidebar, topBar });
-
-            ShowDashboard();
+            Controls.Add(content); Controls.Add(side); Controls.Add(top);
+            Show(new BorrowForm());
         }
 
-        private void LoadChild(Form child)
+        void Show(Form f)
         {
             content.Controls.Clear();
-            child.TopLevel    = false;
-            child.FormBorderStyle = FormBorderStyle.None;
-            child.Dock        = DockStyle.Fill;
-            content.Controls.Add(child);
-            child.Show();
-        }
-
-        private void ShowDashboard()
-        {
-            content.Controls.Clear();
-            var lbl = new Label
-            {
-                Text      = $"Welcome back, {SessionHelper.FullName}!\n\nSelect a module from the sidebar.",
-                Font      = new Font("Segoe UI", 15),
-                ForeColor = Color.FromArgb(26, 60, 94),
-                Dock      = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            content.Controls.Add(lbl);
+            f.TopLevel = false; f.FormBorderStyle = FormBorderStyle.None;
+            f.Dock = DockStyle.Fill; f.BackColor = UI.Light;
+            content.Controls.Add(f); f.Show();
         }
     }
 }
