@@ -1,12 +1,6 @@
--- ============================================================
---  Library Management System – Full Database Setup
---  Run this in MySQL Workbench / phpMyAdmin / CLI
--- ============================================================
-
 CREATE DATABASE IF NOT EXISTS library_db;
 USE library_db;
 
--- ── TABLES ───────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS users (
     user_id    INT          AUTO_INCREMENT PRIMARY KEY,
@@ -40,7 +34,6 @@ CREATE TABLE IF NOT EXISTS borrowings (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
--- ── TRIGGERS ─────────────────────────────────────────────────
 
 DELIMITER $$
 
@@ -83,9 +76,6 @@ END$$
 
 DELIMITER ;
 
--- ── SEED DATA ─────────────────────────────────────────────────
-
--- Users (password = MD5 of username + '123', e.g. admin123)
 INSERT IGNORE INTO users (full_name, username, email, password, role, status) VALUES
   ('System Administrator', 'admin',    'admin@library.com',    MD5('admin123'),    'Admin',     'Active'),
   ('Maria Santos',         'librarian','librarian@library.com', MD5('librarian123'),'Librarian', 'Active'),
@@ -94,7 +84,6 @@ INSERT IGNORE INTO users (full_name, username, email, password, role, status) VA
   ('Carlo Mendoza',        'carlo',    'carlo@mail.com',        MD5('carlo123'),    'Member',    'Active'),
   ('Lena Bautista',        'lena',     'lena@mail.com',         MD5('lena123'),     'Member',    'Active');
 
--- Books (Christian / Faith-based titles)
 INSERT IGNORE INTO books (title, author, isbn, total_copies, available_copies) VALUES
   ('The Purpose Driven Life',       'Rick Warren',     '978-0-31-033750-9', 6, 6),
   ('Mere Christianity',             'C.S. Lewis',      '978-0-06-065292-0', 5, 5),
@@ -109,7 +98,6 @@ INSERT IGNORE INTO books (title, author, isbn, total_copies, available_copies) V
   ('Disciplines of a Godly Man',    'R. Kent Hughes',  '978-1-43-351398-8', 3, 3),
   ('Desiring God',                  'John Piper',      '978-1-59-638824-7', 4, 4);
 
--- Sample borrowings (using subqueries so IDs stay flexible)
 INSERT INTO borrowings (book_id, user_id, borrow_date, due_date) VALUES
   ((SELECT book_id FROM books WHERE isbn='978-0-31-033750-9'),
    (SELECT user_id FROM users WHERE username='juan'),
@@ -117,9 +105,8 @@ INSERT INTO borrowings (book_id, user_id, borrow_date, due_date) VALUES
 
   ((SELECT book_id FROM books WHERE isbn='978-0-06-065292-0'),
    (SELECT user_id FROM users WHERE username='ana'),
-   CURDATE() - INTERVAL 20 DAY, CURDATE() - INTERVAL 6 DAY);  -- overdue → fine on return
+   CURDATE() - INTERVAL 20 DAY, CURDATE() - INTERVAL 6 DAY);  
 
--- ── QUICK VERIFICATION ────────────────────────────────────────
 SELECT 'Users:'      AS entity, COUNT(*) AS total FROM users
 UNION ALL
 SELECT 'Books',      COUNT(*) FROM books

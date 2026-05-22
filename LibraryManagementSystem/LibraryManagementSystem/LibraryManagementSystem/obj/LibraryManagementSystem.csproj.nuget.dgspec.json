@@ -17,6 +17,7 @@
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
+          "C:\\Users\\L\\OneDrive\\Documents\\GitHub\\-EDP-Activity-7\\LibraryManagementSystem\\NuGet.Config",
           "C:\\Users\\L\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -25,7 +26,6 @@
           "net8.0-windows"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -52,15 +52,15 @@
           "dependencies": {
             "ClosedXML": {
               "target": "Package",
-              "version": "[0.105.0, )"
+              "version": "[0.102.2, )"
             },
             "DocumentFormat.OpenXml": {
               "target": "Package",
-              "version": "[3.5.1, )"
+              "version": "[2.20.0, )"
             },
             "MySql.Data": {
               "target": "Package",
-              "version": "[9.7.0, )"
+              "version": "[8.3.0, )"
             }
           },
           "imports": [

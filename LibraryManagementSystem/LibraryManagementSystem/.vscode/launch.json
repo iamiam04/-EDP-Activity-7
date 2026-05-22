@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Launch (Windows)",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/LibraryManagementSystem/LibraryManagementSystem/bin/Debug/net8.0-windows/LibraryManagementSystem.exe",
+      "cwd": "${workspaceFolder}/LibraryManagementSystem/LibraryManagementSystem",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "preLaunchTask": "build"
+    }
+  ]
+}
