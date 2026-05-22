@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/LibraryManagementSystem/LibraryManagementSystem.csproj",
+        "${workspaceFolder}/LibraryManagementSystem/LibraryManagementSystem/LibraryManagementSystem.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],

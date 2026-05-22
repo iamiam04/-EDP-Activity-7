@@ -1,9 +1,7 @@
 namespace LibraryManagementSystem.Forms
 {
-    /// <summary>Shared colours, fonts, and control factories for every form.</summary>
     internal static class UI
     {
-        // ── Palette ───────────────────────────────────────────────────────────
         public static readonly Color Navy   = Color.FromArgb(26,  60,  94);
         public static readonly Color Teal   = Color.FromArgb(36,  75, 115);
         public static readonly Color Accent = Color.FromArgb(46, 109, 164);
@@ -11,14 +9,12 @@ namespace LibraryManagementSystem.Forms
         public static readonly Color Green  = Color.FromArgb(21, 128, 61);
         public static readonly Color Red    = Color.FromArgb(160, 30,  30);
 
-        // ── Fonts ─────────────────────────────────────────────────────────────
         public static readonly Font Body  = new("Segoe UI", 10);
         public static readonly Font Bold  = new("Segoe UI", 10, FontStyle.Bold);
         public static readonly Font Small = new("Segoe UI",  8);
         public static readonly Font H1    = new("Segoe UI", 14, FontStyle.Bold);
         public static readonly Font H2    = new("Segoe UI", 11, FontStyle.Bold);
 
-        // ── Control factories ─────────────────────────────────────────────────
         public static Label Title(string text) => new()
         {
             Text = text, Location = new(20, 14), AutoSize = true, Font = H1, ForeColor = Navy

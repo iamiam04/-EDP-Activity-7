@@ -3,7 +3,6 @@ using MySql.Data.MySqlClient;
 
 namespace LibraryManagementSystem.Forms
 {
-    /// <summary>Transaction 2 – Return a Book (fine auto-computed by DB trigger)</summary>
     public class ReturnForm : Form
     {
         readonly DataGridView grid   = UI.Grid();

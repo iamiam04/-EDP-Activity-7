@@ -5,10 +5,11 @@
       "name": ".NET Launch (Windows)",
       "type": "coreclr",
       "request": "launch",
-      "program": "${workspaceFolder}/LibraryManagementSystem/bin/Debug/net8.0-windows/win-x64/LibraryManagementSystem.exe",
-      "cwd": "${workspaceFolder}/LibraryManagementSystem",
+      "program": "${workspaceFolder}/LibraryManagementSystem/LibraryManagementSystem/bin/Debug/net8.0-windows/LibraryManagementSystem.exe",
+      "cwd": "${workspaceFolder}/LibraryManagementSystem/LibraryManagementSystem",
       "stopAtEntry": false,
-      "console": "internalConsole"
+      "console": "internalConsole",
+      "preLaunchTask": "build"
     }
   ]
 }

@@ -39,7 +39,7 @@ namespace LibraryManagementSystem.Forms
             var bClr = UI.Btn("Clear",  196, 276, 80, Color.Gray);
             bAdd.Enabled = bUpd.Enabled = isAdmin;
             bAdd.Click += (_, _) => Save();
-            bUpd.Click += (_, _) => Update();
+            bUpd.Click += (_, _) => SaveUpdate();
             bClr.Click += (_, _) => Clear();
             Controls.AddRange(new Control[] { bAdd, bUpd, bClr });
 
@@ -99,7 +99,7 @@ namespace LibraryManagementSystem.Forms
             catch (Exception ex) { Msg(ex.Message, true); }
         }
 
-        void Update()
+        void SaveUpdate()
         {
             if (selId < 0) { Msg("Select a user first.", true); return; }
             if (!Valid()) return;

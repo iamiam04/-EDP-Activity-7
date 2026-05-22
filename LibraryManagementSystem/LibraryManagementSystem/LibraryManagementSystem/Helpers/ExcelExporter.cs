@@ -10,10 +10,9 @@ namespace LibraryManagementSystem.Helpers
 {
     public static class ExcelExporter
     {
-        const string Company = "Grace Library";
-        const string Address = "Buenvista, Irosinm Sorsogon";
+        const string Company = "City Public Library";
+        const string Address = "123 Knowledge Ave, Quezon City";
 
-        // ── Public entry point ────────────────────────────────────────────────
 
         public static void Export(string mode, System.Data.DataTable dt, string path)
         {
@@ -27,19 +26,16 @@ namespace LibraryManagementSystem.Helpers
             InjectChart(path, cfg.chartTitle, cfg.series, cfg.chartData(dt));
         }
 
-        // ── Sheet 1: header · table · signature ──────────────────────────────
 
         static void Sheet1(XLWorkbook wb, string title, string[] cols, IEnumerable<object?[]> rows)
         {
             var ws = wb.AddWorksheet("Report");
 
-            // Header block
             Cell(ws, 1, 1, cols.Length, Company, 16, "#1a3c5e", bold: true);
             Cell(ws, 2, 1, cols.Length, Address,  10, null,     italic: true);
             Cell(ws, 3, 1, cols.Length, title,    13, "#2e6da4", bold: true);
             Cell(ws, 4, 1, cols.Length, $"Generated: {DateTime.Now:MMMM dd, yyyy HH:mm}  |  By: {Session.FullName}", 9, null, italic: true);
 
-            // Logo placeholder
             var logo = ws.Range(1, cols.Length + 1, 4, cols.Length + 2);
             logo.Merge(); logo.FirstCell().Value = "[LIBRARY LOGO]";
             logo.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
@@ -48,14 +44,12 @@ namespace LibraryManagementSystem.Helpers
             logo.Style.Font.Italic = true; logo.Style.Font.FontColor = XLColor.Gray;
             ws.Row(5).Height = 5;
 
-            // Column headers
             for (int c = 0; c < cols.Length; c++) ws.Cell(6, c + 1).Value = cols[c];
             var hdr = ws.Range(6, 1, 6, cols.Length);
             hdr.Style.Fill.BackgroundColor = XLColor.FromHtml("#1a3c5e");
             hdr.Style.Font.FontColor = XLColor.White; hdr.Style.Font.Bold = true;
             hdr.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
-            // Data rows
             int r = 7;
             foreach (var row in rows)
             {
@@ -71,7 +65,6 @@ namespace LibraryManagementSystem.Helpers
             tbl.Style.Border.InsideBorder  = XLBorderStyleValues.Hair;
             ws.Columns().AdjustToContents();
 
-            // Signature block
             int sig = last + 3;
             ws.Cell(sig,     1).Value = "Prepared by:";
             ws.Cell(sig + 1, 1).Value = Session.FullName; ws.Cell(sig + 1, 1).Style.Font.Bold = true;
@@ -84,7 +77,6 @@ namespace LibraryManagementSystem.Helpers
             ws.Cell(sig + 2, ac).Value = "(Library Director)"; ws.Cell(sig + 2, ac).Style.Font.Italic = true;
         }
 
-        // ── Sheet 2: chart data table ─────────────────────────────────────────
 
         static void Sheet2(XLWorkbook wb, string chartTitle, string[] series, (string[] cats, double[][] vals) d)
         {
@@ -101,7 +93,6 @@ namespace LibraryManagementSystem.Helpers
             ws.Columns().AdjustToContents();
         }
 
-        // ── OpenXml chart injection ───────────────────────────────────────────
 
         static void InjectChart(string path, string chartTitle, string[] series, (string[] cats, double[][] vals) d)
         {
@@ -144,19 +135,16 @@ namespace LibraryManagementSystem.Helpers
                 ser.Append(new C.Index { Val = (uint)s });
                 ser.Append(new C.Order { Val = (uint)s });
 
-                // Series name
                 var stx = new C.SeriesText();
                 var sr  = new C.StringReference();
                 sr.Append(new C.Formula($"\"{series[s]}\""));
                 sr.Append(new C.StringCache(new C.PointCount { Val = 1u }, new C.StringPoint { Index = 0u, NumericValue = new C.NumericValue(series[s]) }));
                 stx.Append(sr); ser.Append(stx);
 
-                // Fill colour
                 var fill = new A.SolidFill();
                 fill.Append(new A.RgbColorModelHex { Val = colors[s % colors.Length].ToString("X6") });
                 var sp = new C.ShapeProperties(); sp.Append(fill); ser.Append(sp);
 
-                // Categories
                 var catCache = new C.StringCache();
                 catCache.Append(new C.PointCount { Val = (uint)cats.Length });
                 for (int i = 0; i < cats.Length; i++)
@@ -166,7 +154,6 @@ namespace LibraryManagementSystem.Helpers
                 catRef.Append(catCache);
                 var catAx = new C.CategoryAxisData(); catAx.Append(catRef); ser.Append(catAx);
 
-                // Values
                 var numCache = new C.NumberingCache();
                 numCache.Append(new C.FormatCode("General"));
                 numCache.Append(new C.PointCount { Val = (uint)vals[s].Length });
@@ -182,8 +169,8 @@ namespace LibraryManagementSystem.Helpers
             bar.Append(new C.AxisId { Val = 1u }); bar.Append(new C.AxisId { Val = 2u });
             plot.Append(bar);
 
-            Axis<C.CategoryAxis>(plot, 1u, C.AxisPositionValues.Bottom, 2u);
-            Axis<C.ValueAxis>(plot, 2u, C.AxisPositionValues.Left, 1u);
+            CatAxis(plot, 1u, C.AxisPositionValues.Bottom, 2u);
+            ValAxis(plot, 2u, C.AxisPositionValues.Left, 1u);
 
             chart.Append(plot);
             chart.Append(new C.Legend(new C.LegendPosition { Val = C.LegendPositionValues.Bottom }));
@@ -193,13 +180,23 @@ namespace LibraryManagementSystem.Helpers
             return cs;
         }
 
-        static void Axis<T>(C.PlotArea plot, uint id, C.AxisPositionValues pos, uint crossId)
-            where T : C.AxisBase, new()
+        static void CatAxis(C.PlotArea plot, uint id, C.AxisPositionValues pos, uint crossId)
         {
-            var ax = new T();
-            ax.Append(new C.AxisId    { Val = id });
+            var ax = new C.CategoryAxis();
+            ax.Append(new C.AxisId       { Val = id });
             ax.Append(new C.Scaling(new C.Orientation { Val = C.OrientationValues.MinMax }));
-            ax.Append(new C.Delete    { Val = false });
+            ax.Append(new C.Delete       { Val = false });
+            ax.Append(new C.AxisPosition { Val = pos });
+            ax.Append(new C.CrossingAxis { Val = crossId });
+            plot.Append(ax);
+        }
+
+        static void ValAxis(C.PlotArea plot, uint id, C.AxisPositionValues pos, uint crossId)
+        {
+            var ax = new C.ValueAxis();
+            ax.Append(new C.AxisId       { Val = id });
+            ax.Append(new C.Scaling(new C.Orientation { Val = C.OrientationValues.MinMax }));
+            ax.Append(new C.Delete       { Val = false });
             ax.Append(new C.AxisPosition { Val = pos });
             ax.Append(new C.CrossingAxis { Val = crossId });
             plot.Append(ax);
@@ -235,7 +232,6 @@ namespace LibraryManagementSystem.Helpers
             return wd;
         }
 
-        // ── Report configurations ─────────────────────────────────────────────
 
         record Cfg(string title, string[] cols,
             Func<System.Data.DataTable, IEnumerable<object?[]>> rows,
@@ -273,7 +269,6 @@ namespace LibraryManagementSystem.Helpers
             _ => throw new ArgumentException("Unknown mode: " + mode)
         };
 
-        // ── Tiny helpers ──────────────────────────────────────────────────────
 
         static void Cell(IXLWorksheet ws, int row, int c1, int cLen, string val, int size, string? hex, bool bold = false, bool italic = false)
         {
@@ -283,7 +278,6 @@ namespace LibraryManagementSystem.Helpers
             if (hex != null) range.Style.Font.FontColor = XLColor.FromHtml(hex);
         }
 
-        // Converts 1-based column index to Excel letter (A, B, … Z, AA …)
         static string Col(int n) { string s = ""; while (n > 0) { s = (char)('A' + (n - 1) % 26) + s; n = (n - 1) / 26; } return s; }
     }
 }

@@ -4,7 +4,7 @@ namespace LibraryManagementSystem.Helpers
 {
     public static class DB
     {
-        const string CS = "Server=localhost;Database=library_db;Uid=root;Pwd=ChristisKing7;";
+        const string CS = "Server=localhost;Database=library_db;Uid=root;Pwd=;";
 
         public static MySqlConnection Open()
         {

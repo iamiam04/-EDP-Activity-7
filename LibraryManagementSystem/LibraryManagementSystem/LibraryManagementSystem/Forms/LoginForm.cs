@@ -22,7 +22,7 @@ namespace LibraryManagementSystem.Forms
             var banner = new Panel { Dock = DockStyle.Top, Height = 60, BackColor = UI.Navy };
             banner.Controls.Add(new Label
             {
-                Text = "📚  City Public Library", Dock = DockStyle.Fill,
+                Text = "📚  Grace Library", Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 14, FontStyle.Bold),
                 ForeColor = Color.White, TextAlign = ContentAlignment.MiddleCenter
             });

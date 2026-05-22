@@ -3,7 +3,6 @@ using MySql.Data.MySqlClient;
 
 namespace LibraryManagementSystem.Forms
 {
-    /// <summary>Transaction 1 – Borrow a Book</summary>
     public class BorrowForm : Form
     {
         readonly ComboBox      cmbMember = UI.Cmb(145, 60);

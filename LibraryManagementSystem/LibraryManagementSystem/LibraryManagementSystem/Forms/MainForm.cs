@@ -12,7 +12,6 @@ namespace LibraryManagementSystem.Forms
             Size = new(1100, 680); StartPosition = FormStartPosition.CenterScreen;
             MinimumSize = new(900, 580);
 
-            // ── Top bar ───────────────────────────────────────────────────────
             var top = new Panel { Dock = DockStyle.Top, Height = 50, BackColor = UI.Navy };
             top.Controls.Add(new Label
             {
@@ -31,7 +30,6 @@ namespace LibraryManagementSystem.Forms
             logout.Dock = DockStyle.Right; logout.Click += (_, _) => Close();
             top.Controls.Add(logout);
 
-            // ── Sidebar ───────────────────────────────────────────────────────
             var side = new Panel { Dock = DockStyle.Left, Width = 182, BackColor = UI.Teal };
 
             (string Text, Func<Form>? Make)[] nav =
@@ -73,7 +71,6 @@ namespace LibraryManagementSystem.Forms
                 side.Controls.Add(btn);
             }
 
-            // Reverse so Dock=Top stacks correctly
             var items = side.Controls.Cast<Control>().ToList();
             side.Controls.Clear(); items.Reverse();
             foreach (var c in items) side.Controls.Add(c);

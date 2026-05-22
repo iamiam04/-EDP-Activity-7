@@ -1,0 +1,6 @@
+c:\Users\L\OneDrive\Documents\GitHub\-EDP-Activity-7\LibraryManagementSystem\LibraryManagementSystem\LibraryManagementSystem\obj\Debug\net8.0-windows\win-x64\LibraryManagementSystem.csproj.AssemblyReference.cache
+c:\Users\L\OneDrive\Documents\GitHub\-EDP-Activity-7\LibraryManagementSystem\LibraryManagementSystem\LibraryManagementSystem\obj\Debug\net8.0-windows\win-x64\LibraryManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\L\OneDrive\Documents\GitHub\-EDP-Activity-7\LibraryManagementSystem\LibraryManagementSystem\LibraryManagementSystem\obj\Debug\net8.0-windows\win-x64\LibraryManagementSystem.AssemblyInfoInputs.cache
+c:\Users\L\OneDrive\Documents\GitHub\-EDP-Activity-7\LibraryManagementSystem\LibraryManagementSystem\LibraryManagementSystem\obj\Debug\net8.0-windows\win-x64\LibraryManagementSystem.AssemblyInfo.cs
+c:\Users\L\OneDrive\Documents\GitHub\-EDP-Activity-7\LibraryManagementSystem\LibraryManagementSystem\LibraryManagementSystem\obj\Debug\net8.0-windows\win-x64\LibraryManagementSystem.csproj.CoreCompileInputs.cache
+c:\Users\L\OneDrive\Documents\GitHub\-EDP-Activity-7\LibraryManagementSystem\LibraryManagementSystem\LibraryManagementSystem\obj\Debug\net8.0-windows\win-x64\LibraryManagementSystem.sourcelink.json

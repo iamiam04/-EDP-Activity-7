@@ -3,7 +3,6 @@ using MySql.Data.MySqlClient;
 
 namespace LibraryManagementSystem.Forms
 {
-    /// <summary>Transaction 3 – Manage Books (Inventory CRUD)</summary>
     public class BooksForm : Form
     {
         readonly TextBox       txtTitle  = UI.Txt(145, 55, 270);
@@ -28,7 +27,7 @@ namespace LibraryManagementSystem.Forms
             var bDel = UI.Btn("Delete", 196, 240, 80, UI.Red);
             var bClr = UI.Btn("Clear",  284, 240, 80, Color.Gray);
             bAdd.Click += (_, _) => Save();
-            bUpd.Click += (_, _) => Update();
+            bUpd.Click += (_, _) => SaveUpdate();
             bDel.Click += (_, _) => Delete();
             bClr.Click += (_, _) => Clear();
             Controls.AddRange(new Control[] { bAdd, bUpd, bDel, bClr });
@@ -83,7 +82,7 @@ namespace LibraryManagementSystem.Forms
             catch (Exception ex) { Msg(ex.Message, true); }
         }
 
-        void Update()
+        void SaveUpdate()
         {
             if (selId < 0) { Msg("Select a row first.", true); return; }
             if (!Valid()) return;
