@@ -893,11 +893,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\L\\OneDrive\\code\\Event-Driven\\A4\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem.csproj",
+      "projectUniqueName": "C:\\Users\\L\\OneDrive\\Documents\\GitHub\\-EDP-Activity-7\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem.csproj",
       "projectName": "LibraryManagementSystem",
-      "projectPath": "C:\\Users\\L\\OneDrive\\code\\Event-Driven\\A4\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem.csproj",
+      "projectPath": "C:\\Users\\L\\OneDrive\\Documents\\GitHub\\-EDP-Activity-7\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem.csproj",
       "packagesPath": "C:\\Users\\L\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\L\\OneDrive\\code\\Event-Driven\\A4\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem\\obj\\",
+      "outputPath": "C:\\Users\\L\\OneDrive\\Documents\\GitHub\\-EDP-Activity-7\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -916,7 +916,6 @@
       },
       "frameworks": {
         "net8.0-windows7.0": {
-          "framework": "net8.0-windows7.0",
           "targetAlias": "net8.0-windows",
           "projectReferences": {}
         }
@@ -935,7 +934,6 @@
     },
     "frameworks": {
       "net8.0-windows7.0": {
-        "framework": "net8.0-windows7.0",
         "targetAlias": "net8.0-windows",
         "dependencies": {
           "ClosedXML": {

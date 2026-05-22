@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dCF4H1gO+yk=",
+  "dgSpecHash": "+qQl5ZvXW38=",
   "success": true,
-  "projectFilePath": "C:\\Users\\L\\OneDrive\\code\\Event-Driven\\A4\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem.csproj",
+  "projectFilePath": "C:\\Users\\L\\OneDrive\\Documents\\GitHub\\-EDP-Activity-7\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem\\LibraryManagementSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\L\\.nuget\\packages\\bouncycastle.cryptography\\2.6.2\\bouncycastle.cryptography.2.6.2.nupkg.sha512",
     "C:\\Users\\L\\.nuget\\packages\\closedxml\\0.105.0\\closedxml.0.105.0.nupkg.sha512",
